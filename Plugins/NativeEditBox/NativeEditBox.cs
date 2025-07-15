@@ -124,6 +124,13 @@ public partial class NativeEditBox : MonoBehaviour
 		Vector2 zero = rectTransform.localToWorldMatrix.MultiplyPoint(new Vector3(r.x, r.y));
 		Vector2 one = rectTransform.localToWorldMatrix.MultiplyPoint(new Vector3(r.x + r.width, r.y + r.height));
 
+  		var camera = rectTransform.GetComponentInParent<Canvas>().worldCamera;
+		if (camera != null)
+		{
+			zero = camera.WorldToScreenPoint(zero);
+			one = camera.WorldToScreenPoint(one);
+		}
+
 		return new Rect(zero.x, Screen.height - one.y, one.x, Screen.height - zero.y);
 	}
 
